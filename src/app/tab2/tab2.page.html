@@ -1,13 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      設定
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
+    <ion-item (click)="openProfile()" button="true"><ion-label>プロフィール</ion-label></ion-item>
     <ion-item (click)="signOut()" button="true"><ion-label>ログアウト</ion-label></ion-item>
   </ion-list>
 </ion-content>
