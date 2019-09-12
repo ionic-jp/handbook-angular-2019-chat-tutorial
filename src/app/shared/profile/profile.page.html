@@ -5,7 +5,8 @@
     </ion-buttons>
     <ion-title>プロフィール</ion-title>
     <ion-buttons slot="end">
-      <ion-button>登録</ion-button>
+      <ion-button (click)="updateProfile()"
+                  [disabled]="!f.form.valid || (!photo && !this.user.photoDataUrl)">登録</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

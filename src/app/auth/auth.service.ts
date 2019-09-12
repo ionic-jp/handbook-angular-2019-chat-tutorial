@@ -14,6 +14,10 @@ export class AuthService {
     public alertController: AlertController,
   ) { }
 
+  getUserId(): string {
+    return this.afAuth.auth.currentUser.uid;
+  }
+
   authSignUp(login: { email: string, password: string }) {
     return this.afAuth.auth.createUserWithEmailAndPassword(login.email, login.password)
       .then(() => this.navController.navigateForward('/'))
