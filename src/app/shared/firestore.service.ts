@@ -38,10 +38,10 @@ export class FirestoreService {
 
   chatInit(): Observable<IChat[]> {
     return this.messageCollection.valueChanges( {idField: 'messageId'} )
-      .pipe(concatMap(async message => {
+      .pipe(concatMap(async messages => {
         const users = await this.userCollection.valueChanges( {idField: 'uid'} )
           .pipe(first()).toPromise(Promise);
-        return message.map(message => {
+        return messages.map(message => {
           const user = users.find(u => u.uid === message.uid);
           return Object.assign(message, user);
         });
