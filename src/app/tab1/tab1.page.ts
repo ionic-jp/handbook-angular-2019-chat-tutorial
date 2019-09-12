@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProfilePage } from '../shared/profile/profile.page';
 import { AuthService } from '../auth/auth.service';
-import { FirestoreService } from '../shared/firestore.service';
+import { FirestoreService, IChat, IUser } from '../shared/firestore.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -11,6 +12,9 @@ import { FirestoreService } from '../shared/firestore.service';
 })
 export class Tab1Page implements OnInit {
   message = '';
+  uid: string;
+  user: IUser;
+  chat: Observable<IChat[]>;
   constructor(
     public modalController: ModalController,
     public auth: AuthService,
@@ -25,5 +29,27 @@ export class Tab1Page implements OnInit {
       });
       await modal.present();
     }
+    this.chat = this.firestore.chatInit();
+  }
+
+  async ionViewWillEnter() {
+    this.uid = this.auth.getUserId();
+    this.user = await this.firestore.userInit(this.uid);
+  }
+
+  postMessage() {
+    if (!this.user) {
+      alert('プロフィール登録が必要です');
+      return;
+    }
+    this.firestore.messageAdd({
+      uid: this.uid,
+      message: this.message,
+      timestamp: Date.now(),
+    });
+  }
+
+  trackByFn(index, item) {
+    return item.messageId;
   }
 }
