@@ -32,6 +32,7 @@ export class Tab1Page implements OnInit {
         component: ProfilePage,
       });
       await modal.present();
+      modal.onWillDismiss().then(() => this.ionViewWillEnter());
     }
     this.chat = this.firestore.chatInit();
   }
