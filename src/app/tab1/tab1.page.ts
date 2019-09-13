@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, IonContent } from '@ionic/angular';
 import { ProfilePage } from '../shared/profile/profile.page';
 import { AuthService } from '../auth/auth.service';
 import { FirestoreService, IChat, IUser } from '../shared/firestore.service';
@@ -15,6 +15,10 @@ export class Tab1Page implements OnInit {
   uid: string;
   user: IUser;
   chat: Observable<IChat[]>;
+
+  @ViewChild(IonContent, { static: true })
+  content: IonContent;
+
   constructor(
     public modalController: ModalController,
     public auth: AuthService,
@@ -47,6 +51,8 @@ export class Tab1Page implements OnInit {
       message: this.message,
       timestamp: Date.now(),
     });
+    this.message = '';
+    this.content.scrollToTop(100);
   }
 
   trackByFn(index, item) {
