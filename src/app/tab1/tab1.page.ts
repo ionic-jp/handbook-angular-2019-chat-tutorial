@@ -27,7 +27,7 @@ export class Tab1Page implements OnInit {
 
   async ngOnInit() {
     const user = await this.firestore.userInit(this.auth.getUserId());
-    if (!user.displayName) {
+    if (!user) {
       const modal = await this.modalController.create({
         component: ProfilePage,
       });
